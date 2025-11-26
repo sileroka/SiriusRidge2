@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: siriusridge2-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=development
+    volumes:
+      - ./backend:/app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    networks:
+      - siriusridge2-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: siriusridge2-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+    networks:
+      - siriusridge2-network
+
+networks:
+  siriusridge2-network:
+    driver: bridge
