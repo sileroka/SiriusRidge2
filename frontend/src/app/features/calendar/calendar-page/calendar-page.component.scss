@@ -1,0 +1,33 @@
+.calendar-page {
+  background: #f9fafb;
+}
+
+.calendar-sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  border-right: 1px solid #e5e7eb;
+  background: white;
+}
+
+.calendar-main {
+  overflow: auto;
+}
+
+:host ::ng-deep {
+  .fc {
+    height: calc(100vh - 120px);
+  }
+
+  .fc-toolbar-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .fc-button {
+    text-transform: capitalize;
+  }
+
+  .fc-event {
+    cursor: pointer;
+  }
+}

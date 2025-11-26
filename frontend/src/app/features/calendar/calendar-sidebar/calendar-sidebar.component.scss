@@ -1,0 +1,25 @@
+.calendar-sidebar-content {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.mini-calendar {
+  :host ::ng-deep {
+    .p-datepicker {
+      border: none;
+      width: 100%;
+    }
+
+    .p-datepicker table {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+.calendar-item {
+  transition: background-color 0.2s;
+}
+
+.color-dot {
+  flex-shrink: 0;
+}

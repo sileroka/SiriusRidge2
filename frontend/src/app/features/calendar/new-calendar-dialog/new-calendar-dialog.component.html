@@ -1,0 +1,80 @@
+<p-dialog
+  header="New Calendar"
+  [(visible)]="visible"
+  [modal]="true"
+  [closable]="true"
+  [style]="{ width: '450px' }"
+  (onHide)="close()"
+>
+  <form [formGroup]="calendarForm" (ngSubmit)="onSave()" class="space-y-4">
+    <!-- Calendar Name -->
+    <div class="field">
+      <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
+        Calendar Name <span class="text-red-500">*</span>
+      </label>
+      <input
+        pInputText
+        id="name"
+        formControlName="name"
+        class="w-full"
+        placeholder="e.g., Family Events, Work, Personal"
+      />
+      @if (calendarForm.get('name')?.invalid && calendarForm.get('name')?.touched) {
+        <small class="text-red-600">Calendar name is required</small>
+      }
+    </div>
+
+    <!-- Color -->
+    <div class="field">
+      <label for="color" class="block text-sm font-medium text-gray-700 mb-2">
+        Color
+      </label>
+      <div class="flex items-center gap-3">
+        <p-colorPicker
+          formControlName="color"
+          [inline]="false"
+        ></p-colorPicker>
+        <div
+          class="w-8 h-8 rounded border-2 border-gray-300"
+          [style.background-color]="calendarForm.get('color')?.value"
+        ></div>
+        <span class="text-sm text-gray-600">{{ calendarForm.get('color')?.value }}</span>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="field">
+      <label for="description" class="block text-sm font-medium text-gray-700 mb-2">
+        Description (optional)
+      </label>
+      <textarea
+        pInputTextarea
+        id="description"
+        formControlName="description"
+        rows="3"
+        class="w-full"
+        placeholder="What is this calendar for?"
+      ></textarea>
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <div class="flex justify-end gap-2">
+      <button
+        pButton
+        label="Cancel"
+        class="p-button-text"
+        (click)="close()"
+        [disabled]="loading()"
+      ></button>
+      <button
+        pButton
+        label="Create Calendar"
+        icon="pi pi-check"
+        (click)="onSave()"
+        [loading]="loading()"
+        [disabled]="calendarForm.invalid"
+      ></button>
+    </div>
+  </ng-template>
+</p-dialog>

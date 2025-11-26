@@ -1,0 +1,23 @@
+<div class="calendar-page h-full flex">
+  <!-- Sidebar -->
+  <app-calendar-sidebar
+    class="calendar-sidebar"
+    (dateSelected)="onDateSelected($event)"
+  ></app-calendar-sidebar>
+
+  <!-- Main Calendar Area -->
+  <div class="calendar-main flex-1 p-6">
+    <full-calendar
+      [options]="calendarOptions"
+      [events]="calendarEvents"
+    ></full-calendar>
+  </div>
+</div>
+
+<!-- Event Dialog -->
+<app-event-dialog
+  [(visible)]="showEventDialog"
+  [event]="selectedEvent()"
+  (saved)="onEventSaved()"
+  (deleted)="onEventDeleted()"
+></app-event-dialog>

@@ -1,36 +1,5 @@
-<div class="app-container">
-  <nav class="nav-sidebar">
-    <div class="nav-header">
-      <h2>SiriusRidge2</h2>
-    </div>
-    <ul class="nav-menu">
-      <li>
-        <a routerLink="/calendar" routerLinkActive="active">
-          <i class="pi pi-calendar"></i>
-          <span>Calendar</span>
-        </a>
-      </li>
-      <li>
-        <a routerLink="/todolist" routerLinkActive="active">
-          <i class="pi pi-check-square"></i>
-          <span>Todo List</span>
-        </a>
-      </li>
-      <li>
-        <a routerLink="/inventory" routerLinkActive="active">
-          <i class="pi pi-box"></i>
-          <span>Inventory</span>
-        </a>
-      </li>
-      <li>
-        <a routerLink="/recipe" routerLinkActive="active">
-          <i class="pi pi-book"></i>
-          <span>Recipes</span>
-        </a>
-      </li>
-    </ul>
-  </nav>
-  <main class="main-content">
-    <router-outlet></router-outlet>
-  </main>
-</div>
+@if (isAuthRoute()) {
+  <router-outlet></router-outlet>
+} @else {
+  <app-layout></app-layout>
+}

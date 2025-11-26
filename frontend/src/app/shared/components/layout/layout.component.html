@@ -1,0 +1,116 @@
+<!-- Mobile Header -->
+<div class="lg:hidden bg-slate-800 text-white p-4 flex items-center justify-between sticky top-0 z-50">
+  <h1 class="text-xl font-bold">HomeBase</h1>
+  <button
+    (click)="toggleMobileMenu()"
+    class="p-2 rounded-md hover:bg-slate-700"
+    aria-label="Toggle menu"
+  >
+    <i class="pi" [ngClass]="isMobileMenuOpen ? 'pi-times' : 'pi-bars'" style="font-size: 1.5rem;"></i>
+  </button>
+</div>
+
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar -->
+  <aside
+    class="bg-slate-800 text-white w-60 flex-shrink-0 flex flex-col fixed lg:static inset-y-0 left-0 transform transition-transform duration-300 ease-in-out z-40"
+    [ngClass]="{
+      '-translate-x-full lg:translate-x-0': !isMobileMenuOpen,
+      'translate-x-0': isMobileMenuOpen
+    }"
+  >
+    <!-- Logo -->
+    <div class="p-6 border-b border-slate-700 hidden lg:block">
+      <h1 class="text-2xl font-bold">HomeBase</h1>
+      @if (currentUser()?.family_id) {
+        <p class="text-sm text-slate-400 mt-1">Family Dashboard</p>
+      }
+    </div>
+
+    <!-- Navigation -->
+    <nav class="flex-1 overflow-y-auto py-6">
+      <ul class="space-y-2 px-4">
+        <li>
+          <a
+            routerLink="/calendar"
+            routerLinkActive="bg-slate-700 text-white"
+            [routerLinkActiveOptions]="{ exact: false }"
+            (click)="closeMobileMenu()"
+            class="flex items-center px-4 py-3 rounded-lg hover:bg-slate-700 transition-colors"
+          >
+            <i class="pi pi-calendar mr-3" style="font-size: 1.25rem;"></i>
+            <span class="font-medium">Calendar</span>
+          </a>
+        </li>
+        <li>
+          <a
+            routerLink="/todos"
+            routerLinkActive="bg-slate-700 text-white"
+            [routerLinkActiveOptions]="{ exact: false }"
+            (click)="closeMobileMenu()"
+            class="flex items-center px-4 py-3 rounded-lg hover:bg-slate-700 transition-colors"
+          >
+            <i class="pi pi-check-square mr-3" style="font-size: 1.25rem;"></i>
+            <span class="font-medium">Tasks</span>
+          </a>
+        </li>
+        <li>
+          <a
+            routerLink="/recipes"
+            routerLinkActive="bg-slate-700 text-white"
+            [routerLinkActiveOptions]="{ exact: false }"
+            (click)="closeMobileMenu()"
+            class="flex items-center px-4 py-3 rounded-lg hover:bg-slate-700 transition-colors"
+          >
+            <i class="pi pi-book mr-3" style="font-size: 1.25rem;"></i>
+            <span class="font-medium">Recipes</span>
+          </a>
+        </li>
+        <li>
+          <a
+            routerLink="/inventory"
+            routerLinkActive="bg-slate-700 text-white"
+            [routerLinkActiveOptions]="{ exact: false }"
+            (click)="closeMobileMenu()"
+            class="flex items-center px-4 py-3 rounded-lg hover:bg-slate-700 transition-colors"
+          >
+            <i class="pi pi-box mr-3" style="font-size: 1.25rem;"></i>
+            <span class="font-medium">Inventory</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- User Info & Logout -->
+    <div class="border-t border-slate-700 p-4">
+      @if (currentUser(); as user) {
+        <div class="mb-3">
+          <p class="font-medium text-sm truncate">{{ user.name || user.email }}</p>
+          @if (user.family_id) {
+            <p class="text-xs text-slate-400 truncate">Family Member</p>
+          }
+        </div>
+      }
+      <button
+        (click)="logout()"
+        class="w-full flex items-center justify-center px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg transition-colors"
+      >
+        <i class="pi pi-sign-out mr-2"></i>
+        <span>Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Mobile Overlay -->
+  @if (isMobileMenuOpen) {
+    <div
+      class="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
+      (click)="closeMobileMenu()"
+    ></div>
+  }
+
+  <!-- Main Content -->
+  <main class="flex-1 overflow-auto bg-gray-50">
+    <router-outlet></router-outlet>
+  </main>
+</div>

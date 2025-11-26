@@ -1,0 +1,64 @@
+<div class="calendar-sidebar-content p-4">
+  <!-- Mini Calendar -->
+  <div class="mini-calendar mb-6">
+    <p-calendar
+      [(ngModel)]="selectedDate"
+      [inline]="true"
+      (onSelect)="onDateSelect($event)"
+      [showWeek]="false"
+    ></p-calendar>
+  </div>
+
+  <!-- Calendars List -->
+  <div class="calendars-section">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="text-lg font-semibold text-gray-900">My Calendars</h3>
+      <button
+        pButton
+        icon="pi pi-plus"
+        (click)="openNewCalendarDialog()"
+        class="p-button-text p-button-sm"
+        [rounded]="true"
+      ></button>
+    </div>
+
+    <div class="calendars-list space-y-2">
+      @for (calendar of calendarService.calendars(); track calendar.id) {
+        <div class="calendar-item flex items-center p-2 rounded hover:bg-gray-50">
+          <p-checkbox
+            [(ngModel)]="calendar.is_visible"
+            [binary]="true"
+            (onChange)="toggleCalendarVisibility(calendar.id)"
+            inputId="cal-{{ calendar.id }}"
+          ></p-checkbox>
+
+          <div class="flex items-center ml-3 flex-1 cursor-pointer">
+            <div
+              class="color-dot w-3 h-3 rounded-full mr-2"
+              [style.background-color]="calendar.color"
+            ></div>
+            <span class="text-sm font-medium text-gray-700">{{ calendar.name }}</span>
+          </div>
+        </div>
+      } @empty {
+        <p class="text-sm text-gray-500 text-center py-4">No calendars yet</p>
+      }
+    </div>
+
+    <!-- Add Calendar Button -->
+    <button
+      pButton
+      label="Add Calendar"
+      icon="pi pi-plus"
+      (click)="openNewCalendarDialog()"
+      class="w-full mt-4"
+      [outlined]="true"
+    ></button>
+  </div>
+</div>
+
+<!-- New Calendar Dialog -->
+<app-new-calendar-dialog
+  [(visible)]="showNewCalendarDialog"
+  (saved)="onCalendarCreated()"
+></app-new-calendar-dialog>

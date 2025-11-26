@@ -1,0 +1,13 @@
+.field {
+  margin-bottom: 1rem;
+}
+
+:host ::ng-deep {
+  .p-dialog .p-dialog-content {
+    padding: 1.5rem;
+  }
+
+  .p-dialog .p-dialog-footer {
+    padding: 1rem 1.5rem;
+  }
+}
